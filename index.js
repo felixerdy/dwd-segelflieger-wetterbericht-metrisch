@@ -8,7 +8,7 @@ $(document).ready(function() {
         var foundFL = tempData.match(FL)
 
         $.each(foundFL, function(i, e) {
-            tempData = tempData.replace(e, Math.ceil((parseInt(e.split('FL')[1]) * 100 * 0.3048) / 500) * 500 + 'm')
+            tempData = tempData.replace(e, (100 * Math.round(parseInt(e.split('FL')[1]) * 100 * 0.3048 / 100)) + 'm')
         });
 
 
@@ -74,6 +74,15 @@ $(document).ready(function() {
 
         $.each(foundFoot, function(i, e) {
           console.log(e.split("FT")[0])
+          tempData = tempData.replace(e, (100 * Math.round(parseInt(e.split("FT")[0]) * 0.3048 / 100)) + "m")
+        });
+
+        // foot
+        var footRegexft = new RegExp(/\d+ FT/g)
+        var foundFootft = tempData.match(footRegexft)
+
+        $.each(foundFootft, function(i, e) {
+          console.log(e.split(" FT")[0])
           tempData = tempData.replace(e, (100 * Math.round(parseInt(e.split("FT")[0]) * 0.3048 / 100)) + "m")
         });
 
