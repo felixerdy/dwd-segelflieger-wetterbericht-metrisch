@@ -1,4 +1,5 @@
 $(document).ready(function() {
+  $('#content').html('Loading...');
     $.get("https://crossorigin.me/https://www.dwd.de/DE/fachnutzer/luftfahrt/teaser/luftsportberichte/fbeu40_edze_node.html", function(data) {
 
         var tempData = $(data).find('pre').html()
@@ -8,7 +9,7 @@ $(document).ready(function() {
         var foundFL = tempData.match(FL)
 
         $.each(foundFL, function(i, e) {
-            tempData = tempData.replace(e, (100 * Math.round(parseInt(e.split('FL')[1]) * 100 * 0.3048 / 100)) + 'm')
+            tempData = tempData.replace(e, '<code>' + (100 * Math.round(parseInt(e.split('FL')[1]) * 100 * 0.3048 / 100)) + 'm</code>')
         });
 
 
@@ -40,7 +41,7 @@ $(document).ready(function() {
         var foundCloudCombined = tempData.match(cloudCombinedRegex)
         $.each(foundCloudCombined, function(i, e) {
           var tempCloudCoverString = cloudCoverNumbers[e.split('/')[0]].start + ' bis ' + cloudCoverNumbers[e.split('/')[1]].end + ' Achtel'
-          tempData = tempData.replace(e, tempCloudCoverString)
+          tempData = tempData.replace(e, '<code>' + tempCloudCoverString + '</code>')
         });
 
         // Cloud cover
@@ -56,7 +57,7 @@ $(document).ready(function() {
         var foundCloud = tempData.match(cloudRegex)
 
         $.each(foundCloud, function(i, e) {
-          tempData = tempData.replace(e, cloudCover[e])
+          tempData = tempData.replace(e, '<code>' + cloudCover[e] + '</code>')
         });
 
         // combined foot
@@ -64,8 +65,9 @@ $(document).ready(function() {
         var footCombined = tempData.match(footCombinedRegex)
 
         $.each(footCombined, function(i, e) {
+          console.log(e)
           var tempFootCombined = (100 * Math.round(parseInt(e.split(' bis ')[0]) * 0.3048 / 100)) + ' bis ' + (100 * Math.round(parseInt(e.split(' bis ')[1]) * 0.3048 / 100)) + 'm'
-          tempData = tempData.replace(e, tempFootCombined)
+          tempData = tempData.replace(e, '<code>' + tempFootCombined + '</code>')
         });
 
         // foot
@@ -73,8 +75,8 @@ $(document).ready(function() {
         var foundFoot = tempData.match(footRegex)
 
         $.each(foundFoot, function(i, e) {
-          console.log(e.split("FT")[0])
-          tempData = tempData.replace(e, (100 * Math.round(parseInt(e.split("FT")[0]) * 0.3048 / 100)) + "m")
+          //console.log(e.split("FT")[0])
+          tempData = tempData.replace(e, '<code>' + (100 * Math.round(parseInt(e.split("FT")[0]) * 0.3048 / 100)) + "m" + '</code>')
         });
 
         // foot
@@ -82,11 +84,43 @@ $(document).ready(function() {
         var foundFootft = tempData.match(footRegexft)
 
         $.each(foundFootft, function(i, e) {
-          console.log(e.split(" FT")[0])
-          tempData = tempData.replace(e, (100 * Math.round(parseInt(e.split("FT")[0]) * 0.3048 / 100)) + "m")
+          //console.log(e.split(" FT")[0])
+          tempData = tempData.replace(e, '<code>' + (100 * Math.round(parseInt(e.split("FT")[0]) * 0.3048 / 100)) + "m" + '</code>')
         });
+
+
+        // combined knots
+        var knotsCombinedRegex = new RegExp(/\d+ bis \d+ KT/g)
+        var knotsCombined = tempData.match(knotsCombinedRegex)
+
+        $.each(knotsCombined, function(i, e) {
+          //console.log(e)
+          var tempKnotsCombined = Math.round(parseInt(e.split(' bis ')[0]) * 0.539957) + ' bis ' + Math.round(parseInt(e.split(' bis ')[1]) * 0.539957) + 'km/h'
+          tempData = tempData.replace(e, '<code>' + tempKnotsCombined + '</code>')
+        });
+
+        // knots
+        var knotsRegex = new RegExp(/\d+ KT/g)
+        var foundKnots = tempData.match(knotsRegex)
+
+        $.each(foundKnots, function(i, e) {
+          //console.log(e.split(" KT")[0])
+          tempData = tempData.replace(e, '<code>' + Math.round(parseInt(e.split("KT")[0]) * 0.539957) + "km/h" + '</code>')
+        });
+
+        // knots
+        var knotsRegexkt = new RegExp(/\d+KT/g)
+        var foundKnotskt = tempData.match(knotsRegexkt)
+
+        $.each(foundKnotskt, function(i, e) {
+          //console.log(e.split(" KT")[0])
+          tempData = tempData.replace(e, '<code>' + Math.round(parseInt(e.split("KT")[0]) * 0.539957) + "km/h" + '</code>')
+        });
+
 
         tempData = tempData.replace(/\r?\n/g, '<br />')
         $('#content').html(tempData);
+        $('[data-toggle="popover"]').popover();
+
     });
 })
