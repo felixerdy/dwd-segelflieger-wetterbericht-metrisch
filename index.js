@@ -1,5 +1,5 @@
 $(document).ready(function() {
-    $.get("https://www.dwd.de/DE/fachnutzer/luftfahrt/teaser/luftsportberichte/fbeu40_edze_node.html", function(data) {
+    $.get("https://crossorigin.me/https://www.dwd.de/DE/fachnutzer/luftfahrt/teaser/luftsportberichte/fbeu40_edze_node.html", function(data) {
 
         var tempData = $(data).find('pre').html()
 
