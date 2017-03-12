@@ -95,7 +95,7 @@ $(document).ready(function() {
 
         $.each(knotsCombined, function(i, e) {
           //console.log(e)
-          var tempKnotsCombined = Math.round(parseInt(e.split(' bis ')[0]) * 0.539957) + ' bis ' + Math.round(parseInt(e.split(' bis ')[1]) * 0.539957) + 'km/h'
+          var tempKnotsCombined = Math.round(parseInt(e.split(' bis ')[0]) * 1.852) + ' bis ' + Math.round(parseInt(e.split(' bis ')[1]) * 1.852) + 'km/h'
           tempData = tempData.replace(e, '<code>' + tempKnotsCombined + '</code>')
         });
 
@@ -105,7 +105,7 @@ $(document).ready(function() {
 
         $.each(foundKnots, function(i, e) {
           //console.log(e.split(" KT")[0])
-          tempData = tempData.replace(e, '<code>' + Math.round(parseInt(e.split("KT")[0]) * 0.539957) + "km/h" + '</code>')
+          tempData = tempData.replace(e, '<code>' + Math.round(parseInt(e.split("KT")[0]) * 1.852) + "km/h" + '</code>')
         });
 
         // knots
@@ -114,7 +114,7 @@ $(document).ready(function() {
 
         $.each(foundKnotskt, function(i, e) {
           //console.log(e.split(" KT")[0])
-          tempData = tempData.replace(e, '<code>' + Math.round(parseInt(e.split("KT")[0]) * 0.539957) + "km/h" + '</code>')
+          tempData = tempData.replace(e, '<code>' + Math.round(parseInt(e.split("KT")[0]) * 1.852) + "km/h" + '</code>')
         });
 
 
