@@ -9,9 +9,7 @@ function convertFlightLevels(tempData) {
   return tempData;
 }
 
-function convert(tempData) {
-  tempData = convertFlightLevels(tempData);
-
+function convertCloudCover(tempData) {
   // cloud cover combined
   var cloudCoverNumbers = {
     NSC: {
@@ -58,6 +56,13 @@ function convert(tempData) {
   $.each(foundCloud, function(i, e) {
     tempData = tempData.replace(e, '<code>' + cloudCover[e] + '</code>')
   });
+
+  return tempData;
+}
+
+function convert(tempData) {
+  tempData = convertFlightLevels(tempData);
+  tempData = convertCloudCover(tempData);
 
   // combined foot
   var footCombinedRegex = /\d+ bis \d+ FT/g;
