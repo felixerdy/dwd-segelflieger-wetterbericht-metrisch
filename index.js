@@ -1,6 +1,6 @@
 function convert(tempData) {
   // FL....
-  var FL = new RegExp(/FL\d+/g);
+  var FL = /FL\d+/g;
   var foundFL = tempData.match(FL);
 
   $.each(foundFL, function(i, e) {
@@ -31,7 +31,7 @@ function convert(tempData) {
     }
   };
 
-  var cloudCombinedRegex = new RegExp(/(NSC|FEW|SCT|BKN|OVC)\/(NSC|FEW|SCT|BKN|OVC)/g);
+  var cloudCombinedRegex = /(NSC|FEW|SCT|BKN|OVC)\/(NSC|FEW|SCT|BKN|OVC)/g;
   var foundCloudCombined = tempData.match(cloudCombinedRegex);
   $.each(foundCloudCombined, function(i, e) {
     var tempCloudCoverString = cloudCoverNumbers[e.split('/')[0]].start + ' bis ' + cloudCoverNumbers[e.split('/')[1]].end + ' Achtel'
@@ -47,7 +47,7 @@ function convert(tempData) {
     OVC: '8 Achtel'
   };
 
-  var cloudRegex = new RegExp(/NSC|FEW|SCT|BKN|OVC/g);
+  var cloudRegex = /NSC|FEW|SCT|BKN|OVC/g;
   var foundCloud = tempData.match(cloudRegex);
 
   $.each(foundCloud, function(i, e) {
@@ -55,7 +55,7 @@ function convert(tempData) {
   });
 
   // combined foot
-  var footCombinedRegex = new RegExp(/\d+ bis \d+ FT/g);
+  var footCombinedRegex = /\d+ bis \d+ FT/g;
   var footCombined = tempData.match(footCombinedRegex);
 
   $.each(footCombined, function(i, e) {
@@ -64,7 +64,7 @@ function convert(tempData) {
   });
 
   // foot
-  var footRegex = new RegExp(/\d+FT/g);
+  var footRegex = /\d+FT/g;
   var foundFoot = tempData.match(footRegex);
 
   $.each(foundFoot, function(i, e) {
@@ -72,7 +72,7 @@ function convert(tempData) {
   });
 
   // foot
-  var footRegexft = new RegExp(/\d+ FT/g);
+  var footRegexft = /\d+ FT/g;
   var foundFootft = tempData.match(footRegexft);
 
   $.each(foundFootft, function(i, e) {
@@ -81,7 +81,7 @@ function convert(tempData) {
 
 
   // combined knots
-  var knotsCombinedRegex = new RegExp(/\d+ bis \d+ KT/g);
+  var knotsCombinedRegex = /\d+ bis \d+ KT/g;
   var knotsCombined = tempData.match(knotsCombinedRegex);
 
   $.each(knotsCombined, function(i, e) {
@@ -90,7 +90,7 @@ function convert(tempData) {
   });
 
   // knots
-  var knotsRegex = new RegExp(/\d+ KT/g);
+  var knotsRegex = /\d+ KT/g;
   var foundKnots = tempData.match(knotsRegex);
 
   $.each(foundKnots, function(i, e) {
@@ -98,7 +98,7 @@ function convert(tempData) {
   });
 
   // knots
-  var knotsRegexkt = new RegExp(/\d+KT/g);
+  var knotsRegexkt = /\d+KT/g;
   var foundKnotskt = tempData.match(knotsRegexkt);
 
   $.each(foundKnotskt, function(i, e) {
