@@ -65,7 +65,6 @@ $(document).ready(function() {
     var footCombined = tempData.match(footCombinedRegex);
 
     $.each(footCombined, function(i, e) {
-      console.log(e);
       var tempFootCombined = (100 * Math.round(parseInt(e.split(' bis ')[0]) * 0.3048 / 100)) + ' bis ' + (100 * Math.round(parseInt(e.split(' bis ')[1]) * 0.3048 / 100)) + 'm'
       tempData = tempData.replace(e, '<code>' + tempFootCombined + '</code>')
     });
@@ -75,7 +74,6 @@ $(document).ready(function() {
     var foundFoot = tempData.match(footRegex);
 
     $.each(foundFoot, function(i, e) {
-      //console.log(e.split("FT")[0])
       tempData = tempData.replace(e, '<code>' + (100 * Math.round(parseInt(e.split("FT")[0]) * 0.3048 / 100)) + "m" + '</code>')
     });
 
@@ -84,7 +82,6 @@ $(document).ready(function() {
     var foundFootft = tempData.match(footRegexft);
 
     $.each(foundFootft, function(i, e) {
-      //console.log(e.split(" FT")[0])
       tempData = tempData.replace(e, '<code>' + (100 * Math.round(parseInt(e.split("FT")[0]) * 0.3048 / 100)) + "m" + '</code>')
     });
 
@@ -94,7 +91,6 @@ $(document).ready(function() {
     var knotsCombined = tempData.match(knotsCombinedRegex);
 
     $.each(knotsCombined, function(i, e) {
-      //console.log(e)
       var tempKnotsCombined = Math.round(parseInt(e.split(' bis ')[0]) * 1.852) + ' bis ' + Math.round(parseInt(e.split(' bis ')[1]) * 1.852) + 'km/h'
       tempData = tempData.replace(e, '<code>' + tempKnotsCombined + '</code>')
     });
@@ -104,7 +100,6 @@ $(document).ready(function() {
     var foundKnots = tempData.match(knotsRegex);
 
     $.each(foundKnots, function(i, e) {
-      //console.log(e.split(" KT")[0])
       tempData = tempData.replace(e, '<code>' + Math.round(parseInt(e.split("KT")[0]) * 1.852) + "km/h" + '</code>')
     });
 
@@ -113,7 +108,6 @@ $(document).ready(function() {
     var foundKnotskt = tempData.match(knotsRegexkt);
 
     $.each(foundKnotskt, function(i, e) {
-      //console.log(e.split(" KT")[0])
       tempData = tempData.replace(e, '<code>' + Math.round(parseInt(e.split("KT")[0]) * 1.852) + "km/h" + '</code>')
     });
 
