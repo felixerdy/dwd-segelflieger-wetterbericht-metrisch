@@ -108,7 +108,7 @@ function convert(tempData) {
   return tempData.replace(/\r?\n/g, '<br />');
 }
 
-$(document).ready(function() {
+function request() {
   $('#content').html('Loading...');
 
   $.get("https://crossorigin.me/https://www.dwd.de/DE/fachnutzer/luftfahrt/teaser/luftsportberichte/fbeu40_edze_node.html", function(data) {
@@ -119,4 +119,8 @@ $(document).ready(function() {
     $('[data-toggle="popover"]').popover();
 
   });
+}
+
+$(document).ready(function() {
+  request();
 });
