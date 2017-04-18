@@ -71,18 +71,10 @@ function convertFeet(tempData) {
   });
 
   // foot
-  var footRegex = /\d+FT/g;
+  var footRegex = /\d+\s*FT/g;
   var foundFoot = tempData.match(footRegex);
 
   $.each(foundFoot, function(i, e) {
-    tempData = tempData.replace(e, '<code>' + (100 * Math.round(parseInt(e.split("FT")[0]) * 0.3048 / 100)) + "m" + '</code>')
-  });
-
-  // foot
-  var footRegexft = /\d+ FT/g;
-  var foundFootft = tempData.match(footRegexft);
-
-  $.each(foundFootft, function(i, e) {
     tempData = tempData.replace(e, '<code>' + (100 * Math.round(parseInt(e.split("FT")[0]) * 0.3048 / 100)) + "m" + '</code>')
   });
 
@@ -100,18 +92,10 @@ function convertKnots(tempData) {
   });
 
   // knots
-  var knotsRegex = /\d+ KT/g;
+  var knotsRegex = /\d+\s*KT/g;
   var foundKnots = tempData.match(knotsRegex);
 
   $.each(foundKnots, function(i, e) {
-    tempData = tempData.replace(e, '<code>' + Math.round(parseInt(e.split("KT")[0]) * 1.852) + "km/h" + '</code>')
-  });
-
-  // knots
-  var knotsRegexkt = /\d+KT/g;
-  var foundKnotskt = tempData.match(knotsRegexkt);
-
-  $.each(foundKnotskt, function(i, e) {
     tempData = tempData.replace(e, '<code>' + Math.round(parseInt(e.split("KT")[0]) * 1.852) + "km/h" + '</code>')
   });
 
