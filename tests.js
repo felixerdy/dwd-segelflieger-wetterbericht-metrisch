@@ -71,6 +71,19 @@ describe('convertFeet()', function() {
   });
 });
 
+describe('convertKnots()', function() {
+  it('converts feet to meters', function() {
+    expect(convertKnots('2KT')).to.equal('<code>4km/h</code>');
+    expect(convertKnots('12KT')).to.equal('<code>22km/h</code>');
+    expect(convertKnots('42 KT')).to.equal('<code>78km/h</code>');
+    expect(convertKnots('12 bis 40 KT')).to.equal('<code>22 bis 74km/h</code>');
+  });
+
+  it('does not fail without matches', function() {
+    expect(convertKnots('foobar')).to.equal('foobar');
+  });
+});
+
 describe('convert()', function() {
   it('returns text', function() {
     expect(convert('foobar')).to.equal('foobar');

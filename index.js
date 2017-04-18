@@ -89,11 +89,7 @@ function convertFeet(tempData) {
   return tempData;
 }
 
-function convert(tempData) {
-  tempData = convertFlightLevels(tempData);
-  tempData = convertCloudCover(tempData);
-  tempData = convertFeet(tempData);
-
+function convertKnots(tempData) {
   // combined knots
   var knotsCombinedRegex = /\d+ bis \d+ KT/g;
   var knotsCombined = tempData.match(knotsCombinedRegex);
@@ -118,6 +114,15 @@ function convert(tempData) {
   $.each(foundKnotskt, function(i, e) {
     tempData = tempData.replace(e, '<code>' + Math.round(parseInt(e.split("KT")[0]) * 1.852) + "km/h" + '</code>')
   });
+
+  return tempData;
+}
+
+function convert(tempData) {
+  tempData = convertFlightLevels(tempData);
+  tempData = convertCloudCover(tempData);
+  tempData = convertFeet(tempData);
+  tempData = convertKnots(tempData);
 
   return tempData.replace(/\r?\n/g, '<br />');
 }
