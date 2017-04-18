@@ -1,9 +1,9 @@
 var RE_FL = /FL(\d+)/g;
-var RE_CLOUD_COVER_RANGE = /(NSC|FEW|SCT|BKN|OVC)\/(NSC|FEW|SCT|BKN|OVC)/g;
+var RE_CLOUD_COVER_RANGE = /(NSC|FEW|SCT|BKN|OVC)\s*\/\s*(NSC|FEW|SCT|BKN|OVC)/g;
 var RE_CLOUD_COVER = /NSC|FEW|SCT|BKN|OVC/g;
-var RE_FEET_RANGE = /(\d+) bis (\d+) FT/g;
+var RE_FEET_RANGE = /(\d+)\s+bis\s+(\d+)\s*FT/g;
 var RE_FEET = /(\d+)\s*FT/g;
-var RE_KNOTS_RANGE = /(\d+) bis (\d+) KT/g;
+var RE_KNOTS_RANGE = /(\d+)\s+bis\s+(\d+)\s*KT/g;
 var RE_KNOTS = /(\d+)\s*KT/g;
 
 function convertFlightLevels(tempData) {
