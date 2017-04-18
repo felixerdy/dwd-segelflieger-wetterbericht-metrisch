@@ -116,7 +116,5 @@ function request() {
     var tempData = convert($(data).find('pre').html());
 
     $('#content').html(tempData);
-    $('[data-toggle="popover"]').popover();
-
   });
 }
