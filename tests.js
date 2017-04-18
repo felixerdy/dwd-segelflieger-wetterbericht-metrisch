@@ -58,6 +58,19 @@ describe('convertCloudCover()', function() {
   });
 });
 
+describe('convertFeet()', function() {
+  it('converts feet to meters', function() {
+    expect(convertFeet('123FT')).to.equal('<code>0m</code>');
+    expect(convertFeet('1234FT')).to.equal('<code>400m</code>');
+    expect(convertFeet('4200 FT')).to.equal('<code>1300m</code>');
+    expect(convertFeet('1200 bis 4200 FT')).to.equal('<code>400 bis 1300m</code>');
+  });
+
+  it('does not fail without matches', function() {
+    expect(convertFeet('foobar')).to.equal('foobar');
+  });
+});
+
 describe('convert()', function() {
   it('returns text', function() {
     expect(convert('foobar')).to.equal('foobar');

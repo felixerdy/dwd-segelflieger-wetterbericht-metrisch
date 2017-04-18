@@ -60,10 +60,7 @@ function convertCloudCover(tempData) {
   return tempData;
 }
 
-function convert(tempData) {
-  tempData = convertFlightLevels(tempData);
-  tempData = convertCloudCover(tempData);
-
+function convertFeet(tempData) {
   // combined foot
   var footCombinedRegex = /\d+ bis \d+ FT/g;
   var footCombined = tempData.match(footCombinedRegex);
@@ -89,6 +86,13 @@ function convert(tempData) {
     tempData = tempData.replace(e, '<code>' + (100 * Math.round(parseInt(e.split("FT")[0]) * 0.3048 / 100)) + "m" + '</code>')
   });
 
+  return tempData;
+}
+
+function convert(tempData) {
+  tempData = convertFlightLevels(tempData);
+  tempData = convertCloudCover(tempData);
+  tempData = convertFeet(tempData);
 
   // combined knots
   var knotsCombinedRegex = /\d+ bis \d+ KT/g;
