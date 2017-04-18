@@ -1,11 +1,16 @@
-function convert(tempData) {
-  // FL....
+function convertFlightLevels(tempData) {
   var FL = /FL\d+/g;
   var foundFL = tempData.match(FL);
 
   $.each(foundFL, function(i, e) {
     tempData = tempData.replace(e, '<code>' + (100 * Math.round(parseInt(e.split('FL')[1]) * 100 * 0.3048 / 100)) + 'm</code>')
   });
+
+  return tempData;
+}
+
+function convert(tempData) {
+  tempData = convertFlightLevels(tempData);
 
   // cloud cover combined
   var cloudCoverNumbers = {
