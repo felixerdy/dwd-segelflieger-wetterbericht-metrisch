@@ -120,7 +120,3 @@ function request() {
 
   });
 }
-
-$(document).ready(function() {
-  request();
-});
