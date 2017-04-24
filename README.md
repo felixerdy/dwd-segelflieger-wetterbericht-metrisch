@@ -9,3 +9,4 @@ TODO:
 - [ ] handle line breaks
 - [ ] handle `und` between values
 - [ ] handle values with no direct units (e.g. im Norden 3000, im Süden 3500 FT)
+- [ ] hande `-` between values
