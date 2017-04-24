@@ -1,12 +1,15 @@
+var RE_FL = /FL(\d+)/g;
+var RE_CLOUD_COVER_RANGE = /(NSC|FEW|SCT|BKN|OVC)\s*\/\s*(NSC|FEW|SCT|BKN|OVC)/g;
+var RE_CLOUD_COVER = /NSC|FEW|SCT|BKN|OVC/g;
+var RE_FEET_RANGE = /(\d+)\s*(?:FT)?\s+bis\s+(\d+)\s*FT/g;
+var RE_FEET = /(\d+)\s*FT/g;
+var RE_KNOTS_RANGE = /(\d+)\s*(?:KT)?\s+bis\s+(\d+)\s*KT/g;
+var RE_KNOTS = /(\d+)\s*KT/g;
+
 function convertFlightLevels(tempData) {
-  var FL = /FL\d+/g;
-  var foundFL = tempData.match(FL);
-
-  $.each(foundFL, function(i, e) {
-    tempData = tempData.replace(e, '<code>' + (100 * Math.round(parseInt(e.split('FL')[1]) * 100 * 0.3048 / 100)) + 'm</code>')
+  return tempData.replace(RE_FL, function(e, value) {
+    return '<code>' + (100 * Math.round(parseInt(value) * 100 * 0.3048 / 100)) + 'm</code>';
   });
-
-  return tempData;
 }
 
 function convertCloudCover(tempData) {
@@ -34,13 +37,6 @@ function convertCloudCover(tempData) {
     }
   };
 
-  var cloudCombinedRegex = /(NSC|FEW|SCT|BKN|OVC)\/(NSC|FEW|SCT|BKN|OVC)/g;
-  var foundCloudCombined = tempData.match(cloudCombinedRegex);
-  $.each(foundCloudCombined, function(i, e) {
-    var tempCloudCoverString = cloudCoverNumbers[e.split('/')[0]].start + ' bis ' + cloudCoverNumbers[e.split('/')[1]].end + ' Achtel'
-    tempData = tempData.replace(e, '<code>' + tempCloudCoverString + '</code>')
-  });
-
   // Cloud cover
   var cloudCover = {
     NSC: 'keine Bewölkung',
@@ -50,72 +46,30 @@ function convertCloudCover(tempData) {
     OVC: '8 Achtel'
   };
 
-  var cloudRegex = /NSC|FEW|SCT|BKN|OVC/g;
-  var foundCloud = tempData.match(cloudRegex);
-
-  $.each(foundCloud, function(i, e) {
-    tempData = tempData.replace(e, '<code>' + cloudCover[e] + '</code>')
+  return tempData.replace(RE_CLOUD_COVER_RANGE, function(e, value1, value2) {
+    var tempCloudCoverString = cloudCoverNumbers[value1].start + ' bis ' + cloudCoverNumbers[value2].end + ' Achtel';
+    return '<code>' + tempCloudCoverString + '</code>';
+  }).replace(RE_CLOUD_COVER, function(e) {
+    return '<code>' + cloudCover[e] + '</code>';
   });
-
-  return tempData;
 }
 
 function convertFeet(tempData) {
-  // combined foot
-  var footCombinedRegex = /\d+ bis \d+ FT/g;
-  var footCombined = tempData.match(footCombinedRegex);
-
-  $.each(footCombined, function(i, e) {
-    var tempFootCombined = (100 * Math.round(parseInt(e.split(' bis ')[0]) * 0.3048 / 100)) + ' bis ' + (100 * Math.round(parseInt(e.split(' bis ')[1]) * 0.3048 / 100)) + 'm'
-    tempData = tempData.replace(e, '<code>' + tempFootCombined + '</code>')
+  return tempData.replace(RE_FEET_RANGE, function(e, value1, value2) {
+    var tempFootCombined = (100 * Math.round(parseInt(value1) * 0.3048 / 100)) + ' bis ' + (100 * Math.round(parseInt(value2) * 0.3048 / 100)) + 'm'
+    return '<code>' + tempFootCombined + '</code>';
+  }).replace(RE_FEET, function(e, value) {
+    return '<code>' + (100 * Math.round(parseInt(value) * 0.3048 / 100)) + "m" + '</code>';
   });
-
-  // foot
-  var footRegex = /\d+FT/g;
-  var foundFoot = tempData.match(footRegex);
-
-  $.each(foundFoot, function(i, e) {
-    tempData = tempData.replace(e, '<code>' + (100 * Math.round(parseInt(e.split("FT")[0]) * 0.3048 / 100)) + "m" + '</code>')
-  });
-
-  // foot
-  var footRegexft = /\d+ FT/g;
-  var foundFootft = tempData.match(footRegexft);
-
-  $.each(foundFootft, function(i, e) {
-    tempData = tempData.replace(e, '<code>' + (100 * Math.round(parseInt(e.split("FT")[0]) * 0.3048 / 100)) + "m" + '</code>')
-  });
-
-  return tempData;
 }
 
 function convertKnots(tempData) {
-  // combined knots
-  var knotsCombinedRegex = /\d+ bis \d+ KT/g;
-  var knotsCombined = tempData.match(knotsCombinedRegex);
-
-  $.each(knotsCombined, function(i, e) {
-    var tempKnotsCombined = Math.round(parseInt(e.split(' bis ')[0]) * 1.852) + ' bis ' + Math.round(parseInt(e.split(' bis ')[1]) * 1.852) + 'km/h'
-    tempData = tempData.replace(e, '<code>' + tempKnotsCombined + '</code>')
+  return tempData.replace(RE_KNOTS_RANGE, function(e, value1, value2) {
+    var tempKnotsCombined = Math.round(parseInt(value1) * 1.852) + ' bis ' + Math.round(parseInt(value2) * 1.852) + 'km/h'
+    return '<code>' + tempKnotsCombined + '</code>';
+  }).replace(RE_KNOTS, function(e, value) {
+    return '<code>' + Math.round(parseInt(value) * 1.852) + "km/h" + '</code>';
   });
-
-  // knots
-  var knotsRegex = /\d+ KT/g;
-  var foundKnots = tempData.match(knotsRegex);
-
-  $.each(foundKnots, function(i, e) {
-    tempData = tempData.replace(e, '<code>' + Math.round(parseInt(e.split("KT")[0]) * 1.852) + "km/h" + '</code>')
-  });
-
-  // knots
-  var knotsRegexkt = /\d+KT/g;
-  var foundKnotskt = tempData.match(knotsRegexkt);
-
-  $.each(foundKnotskt, function(i, e) {
-    tempData = tempData.replace(e, '<code>' + Math.round(parseInt(e.split("KT")[0]) * 1.852) + "km/h" + '</code>')
-  });
-
-  return tempData;
 }
 
 function convert(tempData) {
