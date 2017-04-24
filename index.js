@@ -1,5 +1,4 @@
-function convert(tempData) {
-  // FL....
+function convertFlightLevels(tempData) {
   var FL = /FL\d+/g;
   var foundFL = tempData.match(FL);
 
@@ -7,6 +6,10 @@ function convert(tempData) {
     tempData = tempData.replace(e, '<code>' + (100 * Math.round(parseInt(e.split('FL')[1]) * 100 * 0.3048 / 100)) + 'm</code>')
   });
 
+  return tempData;
+}
+
+function convertCloudCover(tempData) {
   // cloud cover combined
   var cloudCoverNumbers = {
     NSC: {
@@ -54,6 +57,10 @@ function convert(tempData) {
     tempData = tempData.replace(e, '<code>' + cloudCover[e] + '</code>')
   });
 
+  return tempData;
+}
+
+function convertFeet(tempData) {
   // combined foot
   var footCombinedRegex = /\d+ bis \d+ FT/g;
   var footCombined = tempData.match(footCombinedRegex);
@@ -79,7 +86,10 @@ function convert(tempData) {
     tempData = tempData.replace(e, '<code>' + (100 * Math.round(parseInt(e.split("FT")[0]) * 0.3048 / 100)) + "m" + '</code>')
   });
 
+  return tempData;
+}
 
+function convertKnots(tempData) {
   // combined knots
   var knotsCombinedRegex = /\d+ bis \d+ KT/g;
   var knotsCombined = tempData.match(knotsCombinedRegex);
@@ -104,6 +114,15 @@ function convert(tempData) {
   $.each(foundKnotskt, function(i, e) {
     tempData = tempData.replace(e, '<code>' + Math.round(parseInt(e.split("KT")[0]) * 1.852) + "km/h" + '</code>')
   });
+
+  return tempData;
+}
+
+function convert(tempData) {
+  tempData = convertFlightLevels(tempData);
+  tempData = convertCloudCover(tempData);
+  tempData = convertFeet(tempData);
+  tempData = convertKnots(tempData);
 
   return tempData.replace(/\r?\n/g, '<br />');
 }
